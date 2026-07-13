@@ -2,7 +2,6 @@ package com.pluralsight.accountingledger.app;
 
 import com.pluralsight.accountingledger.ui.HomeScreen;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -10,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 @Component
-@ConditionalOnProperty(name = "app.console.enabled", havingValue = "true", matchIfMissing = true)
 public class StartUpRunner implements CommandLineRunner {
 
     private static final DateTimeFormatter DATETIME_FMT =
