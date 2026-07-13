@@ -1,4 +1,4 @@
-package com.pluralsight.accountingledger.enums;
+package com.pluralsight.accountingledger.model;
 
 public enum TransactionType {
     DEPOSIT,
