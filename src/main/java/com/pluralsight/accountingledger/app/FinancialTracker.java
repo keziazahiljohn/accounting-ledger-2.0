@@ -1,4 +1,6 @@
-package com.pluralsight;
+package com.pluralsight.accountingledger.app;
+
+import com.pluralsight.accountingledger.model.Transaction;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -6,7 +8,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 /*

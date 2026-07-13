@@ -1,4 +1,4 @@
-package com.pluralsight;
+package com.pluralsight.accountingledger.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
