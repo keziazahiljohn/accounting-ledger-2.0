@@ -3,9 +3,12 @@ package com.pluralsight.accountingledger.service;
 import com.pluralsight.accountingledger.model.Transaction;
 import com.pluralsight.accountingledger.model.TransactionType;
 import com.pluralsight.accountingledger.repository.TransactionRepository;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class TransactionService {
     private final TransactionRepository transactionRepository;
 
@@ -31,5 +34,13 @@ public class TransactionService {
 
     public List<Transaction> getAllPayments(){
        return transactionRepository.findByType(TransactionType.PAYMENT);
+    }
+
+    public  List<Transaction> searchByDateRange(LocalDate date, LocalDate today){
+        return transactionRepository.findByDateBetween(date, today);
+    }
+
+    public List<Transaction> findByVendor(String vendor){
+        return transactionRepository.findByVendor(vendor);
     }
 }

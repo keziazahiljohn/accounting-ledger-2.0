@@ -1,27 +1,34 @@
 package com.pluralsight.accountingledger.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
+@Table(name = "transactions")
 public class Transaction {
-
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private LocalDate date;
     private LocalTime time;
     private String description;
     private String vendor;
     private double amount;
+    @Enumerated(EnumType.STRING)
     private TransactionType type;
 
-    public Transaction(int id,
-                       LocalDate date,
-                       LocalTime time,
-                       String description,
-                       String vendor,
-                       double amount,
-                       TransactionType type) {
+    public Transaction() {
+    }
 
-        this.id = id;
+    public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount, TransactionType type) {
         this.date = date;
         this.time = time;
         this.description = description;
@@ -70,8 +77,25 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
-        return date + " " + time + " | " + description + " | " + vendor + " | $" + amount;
+        return String.format(
+                "%-4d %-12s %-10s %-10s %-20s %-25s $%10.2f",
+                id,
+                date,
+                time,
+                type,
+                vendor,
+                description,
+                amount
+        );
     }
 }
