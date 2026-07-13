@@ -23,9 +23,6 @@ public class HomeScreen {
         this.ledgerScreen = ledgerScreen;
     }
 
-
-    //Make methods that print out how screen interface and are interactive on the home screen
-
     public void printHomeScreen() {
         System.out.println("Welcome to TransactionApp");
         System.out.println("Choose an option:");
