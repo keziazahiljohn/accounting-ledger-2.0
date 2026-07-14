@@ -17,6 +17,12 @@ public class HomeScreen {
     private final TransactionService transactionService;
     private final LedgerScreen ledgerScreen;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+
     public HomeScreen(TransactionService transactionService,
                       LedgerScreen ledgerScreen) {
         this.transactionService = transactionService;
@@ -24,12 +30,12 @@ public class HomeScreen {
     }
 
     public void printHomeScreen() {
-        System.out.println("Welcome to TransactionApp");
-        System.out.println("Choose an option:");
-        System.out.println("1) Add Deposit");
-        System.out.println("2) Make Payment (Debit)");
-        System.out.println("3) Ledger");
-        System.out.println("0) Exit");
+        System.out.println(ANSI_PURPLE + "Welcome to TransactionApp");
+        System.out.println("Choose an option:" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "1)" + ANSI_RESET + ANSI_PURPLE + " Add Deposit");
+        System.out.println(ANSI_YELLOW + "2)" + ANSI_RESET + ANSI_PURPLE + " Make Payment (Debit)");
+        System.out.println(ANSI_YELLOW + "3)" + ANSI_RESET + ANSI_PURPLE + " Ledger");
+        System.out.println(ANSI_RED + "0)" + ANSI_RESET + ANSI_PURPLE + " Exit" + ANSI_RESET);
     }
 
     public void useHomeScreen(Scanner scanner, DateTimeFormatter dateTimeFormatter, LocalDate date) {
@@ -45,57 +51,57 @@ public class HomeScreen {
                 case "2" -> addTransactions(scanner, TransactionType.PAYMENT, dateTimeFormatter);
                 case "3" -> ledgerScreen.ledgerChoiceMenu(scanner, date);
                 case "0" -> done = false;
-                default -> System.out.println("Invalid input please try again");
+                default -> System.err.println("Invalid input please try again");
             }
         }
     }
 
     public void addTransactions(Scanner scanner, TransactionType type, DateTimeFormatter dateTimeFormatter) {
-            System.out.println("Enter date and time (yyyy-MM-dd HH:mm:ss):");
-            if (!scanner.hasNextLine()) {
-                return;
-            }
-            String dateTimeInput = scanner.nextLine();
-            LocalTime time;
-            LocalDate date;
-            try {
-                LocalDateTime dateTime = LocalDateTime.parse(dateTimeInput, dateTimeFormatter);
-                date = dateTime.toLocalDate();
-                time = dateTime.toLocalTime();
-            } catch (Exception e) {
-                System.out.println("Invalid format, try again.");
-                return;
-            }
-
-            System.out.println("Description of transaction:");
-            if (!scanner.hasNextLine()) {
-                return;
-            }
-            String description = scanner.nextLine();
-
-            System.out.println("Enter the Vendor: ");
-            if (!scanner.hasNextLine()) {
-                return;
-            }
-            String vendor = scanner.nextLine();
-
-            System.out.println("Enter Amount:");
-            if (!scanner.hasNextLine()) {
-                return;
-            }
-            double amount;
-            try {
-                amount = Double.parseDouble(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid amount, try again.");
-                return;
-            }
-
-
-            Transaction transaction = new Transaction(date, time, description, vendor, amount, type);
-
-
-            transactionService.saveTransaction(transaction);
+        System.out.println(ANSI_PURPLE + "Enter date and time (" + ANSI_YELLOW + "yyyy-MM-dd HH:mm:ss" + ANSI_RESET + ANSI_PURPLE + "):" + ANSI_RESET);
+        if (!scanner.hasNextLine()) {
+            return;
         }
+        String dateTimeInput = scanner.nextLine();
+        LocalTime time;
+        LocalDate date;
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeInput, dateTimeFormatter);
+            date = dateTime.toLocalDate();
+            time = dateTime.toLocalTime();
+        } catch (Exception e) {
+            System.err.println("Invalid format, try again.");
+            return;
+        }
+
+        System.out.println(ANSI_PURPLE + "Description of transaction:" + ANSI_RESET);
+        if (!scanner.hasNextLine()) {
+            return;
+        }
+        String description = scanner.nextLine();
+
+        System.out.println(ANSI_PURPLE + "Enter the Vendor: " + ANSI_RESET);
+        if (!scanner.hasNextLine()) {
+            return;
+        }
+        String vendor = scanner.nextLine();
+
+        System.out.println(ANSI_PURPLE + "Enter Amount:" + ANSI_RESET);
+        if (!scanner.hasNextLine()) {
+            return;
+        }
+        double amount;
+        try {
+            amount = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid amount, try again.");
+            return;
+        }
+
+
+        Transaction transaction = new Transaction(date, time, description, vendor, amount, type);
+
+
+        transactionService.saveTransaction(transaction);
     }
+}
 
